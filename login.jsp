@@ -35,7 +35,7 @@
 	}	
 	if (error == true)
 	{
-		out.println("Return <a href='http://localhost:8080/Bank/home.html'>Home</a>");
+		out.println("Return <a href='http://localhost:8080/Bank/home.jsp'>Home</a>");
 	}
 	else
 	{	
@@ -62,15 +62,24 @@
 							session.setAttribute("username", username);
 							session.setAttribute("role", 2);
 							session.setAttribute("name", rs2.getString(1));
-							
+							out.println("<center>");
+							out.println("<a href='http://localhost:8080/Bank/home.jsp'><button style='float:left'>Home</button></a>");
 							out.println("Go to <a href='http://localhost:8080/Bank/admin.jsp'>Admin</a>");
+							out.println("</center>");
 							
 						}
 						else //customer
 						{
-							out.println("<script>");
-							out.println("window.alert('Customer Found');");
-							out.println("</script>");
+							ResultSet rs2 = st.executeQuery("select Name from accounts where AcNo="+ "'" + rs.getString(1) + "'" + "");
+							rs2.next();
+							
+							session.setAttribute("username", username);
+							session.setAttribute("role", 1);
+							session.setAttribute("name", rs2.getString(1));
+							out.println("<center>");
+							out.println("<a href='http://localhost:8080/Bank/home.jsp'><button style='float:left'>Home</button></a>");
+							out.println("Go to <a href='http://localhost:8080/Bank/account.jsp?username=" + username + "'>Account</a>");
+							out.println("</center>");
 						}
 					}
 					else

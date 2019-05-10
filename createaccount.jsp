@@ -10,6 +10,9 @@
 	String accountType = request.getParameter("accountType");
 	String gender = request.getParameter("gender");
 	
+	String nameCheck = name + " "; //prevent null exception if value missing
+	String addressCheck = address + " ";
+	String passwordCheck = password + " ";
 	
 	boolean error = false;
 	
@@ -17,7 +20,7 @@
     Statement st;
     ResultSet rs;
 	
-	if (name.trim().equals("") )
+	if (nameCheck.trim().equals("") )
 	{
 		out.println("<script>");
 		out.println("window.alert('Name is missing');");
@@ -27,7 +30,7 @@
 		
 		
 	}
-	if (address.trim().equals(""))
+	if (addressCheck.trim().equals(""))
 	{
 		out.println("<script>");
 		out.println("window.alert('Address is missing');");
@@ -36,7 +39,7 @@
 		error = true;
 		
 	}
-	if (password.trim().equals(""))
+	if (passwordCheck.trim().equals(""))
 	{
 		out.println("<script>");
 		out.println("window.alert('Password is missing');");
@@ -65,7 +68,7 @@
 	
 	if (error == true)
 	{
-		out.println("Return <a href='http://localhost:8080/Bank/home.html'>Home</a>");
+		out.println("Return <a href='http://localhost:8080/Bank/home.jsp'>Home</a>");
 	}
 	else
 	{
@@ -86,7 +89,7 @@
 			st.executeUpdate(s2);
 			
 			out.println("Account " + accNo + " created");
-			out.println("<a href='http://localhost:8080/Bank/login.html'>Login</a>");
+			out.println("<a href='http://localhost:8080/Bank/loginpage.jsp'>Login</a>");
 		}
 		catch (Exception e)
 		{

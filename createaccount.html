@@ -1,15 +1,27 @@
 <html>
-<form action="http://localhost:8080/Bank/createaccount.jsp" method="post">
-	Name<input name="name">
-	Address <input name="address">
-	Password <input name="password">
-	<br>
-	<input type="radio" name="accountType" value="C">Current
-	<input type="radio" name="accountType" value="S">Saving<br>
-	
-	<input type="radio" name="gender" value="M">Male
-	<input type="radio" name="gender" value="F">Female<br>
-	
-	<input type="submit">
-</form>
+<center><h1>Create Account</h1></center>
+	<a href='http://localhost:8080/Bank/home.jsp'><button style="float:left">Home</button></a> 
+	<form action="http://localhost:8080/Bank/createaccount.jsp" method="post">
+		<center>
+			<table>
+				<tr>
+					<td>Name</td>
+					<td><input name="name"></td>
+				</tr>
+				<tr>
+					<td>Address</td>
+					<td><input name="address"></td>
+				</tr>
+				<tr>
+					<td>Password</td>
+					<td><input type="password" name="password"></td>
+				</tr>
+			</table>
+				<input type="radio" name="accountType" value="C">Current
+				<input type="radio" name="accountType" value="S">Saving<br> 
+				<input type="radio" name="gender" value="M">Male
+				<input type="radio" name="gender" value="F">Female<br>
+				<input type="submit">
+		</center>
+	</form>
 </html>
