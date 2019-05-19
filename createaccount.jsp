@@ -20,55 +20,34 @@
     Statement st;
     ResultSet rs;
 	
-	if (nameCheck.trim().equals("") )
-	{
-		out.println("<script>");
-		out.println("window.alert('Name is missing');");
-		out.println("</script>");
-		
-		error = true;
-		
-		
+	if (nameCheck.trim().equals(""))
+	{	
+		error = true;	
 	}
 	if (addressCheck.trim().equals(""))
 	{
-		out.println("<script>");
-		out.println("window.alert('Address is missing');");
-		out.println("</script>");
-		
-		error = true;
-		
+		error = true;	
 	}
 	if (passwordCheck.trim().equals(""))
 	{
-		out.println("<script>");
-		out.println("window.alert('Password is missing');");
-		out.println("</script>");
-		
+	
 		error = true;
 		
 	}
 	if (accountType == null || accountType.isEmpty())
 	{
-		out.println("<script>");
-		out.println("window.alert('Account Type is missing');");
-		out.println("</script>");
-		
 		error = true;
 		
 	}
 	if (gender == null || gender.isEmpty())
 	{
-		out.println("<script>");
-		out.println("window.alert('Gender is missing');");
-		out.println("</script>");
-		
 		error = true;
 	}
 	
 	if (error == true)
 	{
-		out.println("Return <a href='http://localhost:8080/Bank/home.jsp'>Home</a>");
+		response.sendRedirect("http://localhost:8080/Bank/createaccountpage.html");
+		return; 
 	}
 	else
 	{
@@ -88,8 +67,12 @@
 			String s2 = "insert into accounts values (" + "'" + accNo + "'" + " , " + "'" + name + "'" + ", " + "'" + address + "'" + ")";
 			st.executeUpdate(s2);
 			
-			out.println("Account " + accNo + " created");
-			out.println("<a href='http://localhost:8080/Bank/loginpage.jsp'>Login</a>");
+			con.close();
+			
+			out.println("<script>");
+				out.println("window.alert('Your username is: " + accNo + "' );");	
+				out.println("window.location= 'http://localhost:8080/Bank/loginpage.jsp';");
+			out.println("</script>");
 		}
 		catch (Exception e)
 		{

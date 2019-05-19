@@ -1,0 +1,42 @@
+<html>
+	<head> 
+		<title>Create Account | Mark's Bank </title>
+		<link  href='http://localhost:8080/Bank/stylesheet.css' rel='stylesheet' type='text/css'> 
+	</head>
+	<body>
+		<a href='http://localhost:8080/Bank/homepage.jsp' style='text-decoration:none'><h1><center>Mark's Bank</center></h1></a>
+		<div class='box2'>
+			<center><h2>Create Account</h2></center>
+			<form action="http://localhost:8080/Bank/createaccount.jsp" method="post" id="createAccount">
+				<center>
+					<input name="name" placeholder="Name" class="formTextField">
+					<input name="address" placeholder="Address" class="formTextField">
+					<input type="password" name="password" placeholder="Password" class="formTextField">
+					
+					<div>
+						<h3>Account Type</h3>
+						<input type="radio" name="accountType" value="C">Current
+						<input type="radio" name="accountType" value="S">Saving
+					</div>
+					
+					<div>
+						<h3>Gender</h3>
+						<input type="radio" name="gender" value="M">Male
+						<input type="radio" name="gender" value="F">Female<br>
+					</div>
+					
+					<a href='http://localhost:8080/Bank/homepage.jsp'> 
+							<div class='redBtn'><center>Cancel</center></div>
+					</a>
+					
+					<a href="#" onclick="document.getElementById('createAccount').submit();"> 
+							<div class='greenBtn'><center>Submit</center></div>
+					</a>
+		
+				
+				</center>
+			</form>
+		</div>
+	</body>
+</html>
+

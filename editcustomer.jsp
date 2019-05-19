@@ -1,68 +1,98 @@
 <html>
-
-
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.DriverManager" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.Statement" %>
 
 <%
-	
-	Connection con;
-    Statement st;
-    ResultSet rs;
-	
 	try
 	{
 		if ((Integer) session.getAttribute("role") == 2)
 		{
-			String selectedCustomerAcNo = request.getParameter("acNo");
+			String accountNumber = request.getParameter("acNo");
+			String name = request.getParameter("name");
+			String address = request.getParameter("address");
+			String password = request.getParameter("password");
 			
-			Class.forName("com.mysql.cj.jdbc.Driver"); //xamp...tomcat...lib..(jar file driver)
-			con = DriverManager.getConnection("jdbc:mysql://localhost/marks_test_db_2", "root", "");
-			st = con.createStatement();
+			String nameCheck = name + " "; //prevent null exception if value missing
+			String addressCheck = address + " ";
+			String passwordCheck = password + " ";
+			
+			boolean error = false;
+			
+			Connection con;
+			Statement st;
+			ResultSet rs;
+	
+			if (nameCheck.trim().equals(""))
+			{
+				out.println("<script>");
+				out.println("window.alert('Name is missing');");
+				out.println("</script>");
 				
-			rs = st.executeQuery("select * from accounts where AcNo=" + "'" + selectedCustomerAcNo + "'");
-			rs.next();
+				error = true;
+				
+				
+			}
+			if (addressCheck.trim().equals(""))
+			{
+				out.println("<script>");
+				out.println("window.alert('Address is missing');");
+				out.println("</script>");
+				
+				error = true;
+				
+			}
+			if (passwordCheck.trim().equals(""))
+			{
+				out.println("<script>");
+				out.println("window.alert('Password is missing');");
+				out.println("</script>");
+				
+				error = true;
+			}
 			
-			Statement st2 = con.createStatement();
-			ResultSet rs2 = st2.executeQuery("select Password from users where AcNo=" + "'" + selectedCustomerAcNo + "'");
-			rs2.next();
+			if (error == true)
+			{
+				out.println("Return <a href='http://localhost:8080/Bank/adminpage.jsp'>Admin</a>");
+				
+			}
+			else
+			{
+				try
+				{
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					con = DriverManager.getConnection("jdbc:mysql://localhost/marks_test_db_2", "root", "");
+					st = con.createStatement();
+					
+					String s = "update accounts set Name=" + "'" + name + "'" + ", Address=" + "'" + address + "'" + " where AcNo=" + "'" + accountNumber + "'" + "";
+					st.executeUpdate(s);
+					
+					s = "update users set Password=" + "'" + password + "'" + "where AcNo=" + "'" + accountNumber + "'" + ""; 
+					st.executeUpdate(s);
+					
+					con.close();
+					
+					response.sendRedirect("http://localhost:8080/Bank/adminpage.jsp");
+					return; 
+				}
+				catch (Exception e)
+				{
+					
+				}
+			}
 			
-			out.println("<form action='http://localhost:8080/Bank/editcustomervalidation.jsp' method='post'>");
-			out.println("<center>");
-			out.println("<h1>AcNo:"+selectedCustomerAcNo+"</h1>");
-			out.println("<input type='hidden' value=" + "'" + selectedCustomerAcNo + "'" + " name='acNo'>");
-			out.println("<table>");
-			out.println("<tr>");
 			
-			out.println("<td>Name:</td>");
-			out.println("<td><input value=" + "'" + rs.getString(2) + "'" + " name='name'></td>");
-			out.println("</tr>");
-			
-			out.println("<td>Address:</td>");
-			out.println("<td><input value=" + "'" + rs.getString(3) + "'" + " name='address'></td>");
-			out.println("</tr>");
-		
-			out.println("<td>Password:</td>");
-			out.println("<td><input value=" + "'" + rs2.getString(1) + "'" + " name='password'></td>");
-			out.println("</tr>");
-			
-			out.println("<tr>");
-			out.println("<td><a href='http://localhost:8080/Bank/admin.jsp'><input type='button' value=Cancel></a></td>");
-			out.println("<td><input type='submit'></td>");
-			out.println("</tr>");
-			out.println("</form>");
-			
-			
-
 		}
 	}
 	catch (Exception e)
 	{
 		out.println("<center>");
-		out.println("You have no permisssion to access this page go <a href='http://localhost:8080/Bank/home.jsp'>Home</a>");
+		out.println("You have no permisssion to access this page go <a href='http://localhost:8080/Bank/homepage.jsp'>Home</a>");
 		out.println("</center>");
 	}
+	
+	
 %>
+
 </html>

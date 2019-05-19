@@ -34,19 +34,23 @@
 			st.executeUpdate(s);
 			
 			if (action == 0)
-			{
-				out.println("<center>Block successful return to <a href='http://localhost:8080/Bank/admin.jsp'>Admin</a></center>");
+			{	
+				con.close();
+				response.sendRedirect("http://localhost:8080/Bank/adminpage.jsp");
+				return; 
 			}
 			else
 			{
-				out.println("<center>Activation successful return to <a href='http://localhost:8080/Bank/admin.jsp'>Admin</a></center>");
+				con.close();
+				response.sendRedirect("http://localhost:8080/Bank/adminpage.jsp");
+				return; 
 			}
 		}
 	}
 	catch(Exception e)
 	{
 		out.println("<center>");
-		out.println("You have no permisssion to access this page go <a href='http://localhost:8080/Bank/home.jsp'>Home</a>");
+		out.println("You have no permisssion to access this page go <a href='http://localhost:8080/Bank/homepage.jsp'>Home</a>");
 		out.println("</center>");
 	}
 %>

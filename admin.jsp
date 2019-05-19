@@ -21,7 +21,7 @@
 				
 			rs = st.executeQuery("select * from accounts");
 			out.println("<center>");
-			out.println("<a href='http://localhost:8080/Bank/home.jsp'><button style='float:left'>Home</button></a>");
+			out.println("<a href='http://localhost:8080/Bank/homepage.jsp'><button style='float:left'>Home</button></a>");
 			out.println("<table border='1'>");
 			out.println("<tr><td>S.No</td><td>Account Number</td><td>Name</td><td>Operations</td></tr>");
 			while (rs.next()==true)

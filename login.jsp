@@ -8,34 +8,26 @@
 	String username = request.getParameter("username");
 	String password = request.getParameter("password");
 	
+	String usernameCheck = username + " ";
+	String passwordCheck = password + " ";
+	
 	boolean error = false;
 	
 	Connection con;
     Statement st;
     ResultSet rs;
 	
-	if (username.trim().equals(""))
+	if (usernameCheck.trim().equals(""))
 	{
-		out.println("<script>");
-		out.println("window.alert('User name is missing');");
-		out.println("</script>");
-		
-		error = true;
-		
-		
+		error = true;	
 	}
-	if (password.trim().equals(""))
+	if (passwordCheck.trim().equals(""))
 	{
-		out.println("<script>");
-		out.println("window.alert('Password is missing');");
-		out.println("</script>");
-		
 		error = true;
-		
 	}	
 	if (error == true)
-	{
-		out.println("Return <a href='http://localhost:8080/Bank/home.jsp'>Home</a>");
+	{	
+		response.sendRedirect("http://localhost:8080/Bank/loginpage.jsp");
 	}
 	else
 	{	
@@ -59,50 +51,57 @@
 							ResultSet rs2 = st.executeQuery("select Name from accounts where AcNo="+ "'" + rs.getString(1) + "'" + "");
 							rs2.next();
 							
+							
+							
 							session.setAttribute("username", username);
 							session.setAttribute("role", 2);
 							session.setAttribute("name", rs2.getString(1));
-							out.println("<center>");
-							out.println("<a href='http://localhost:8080/Bank/home.jsp'><button style='float:left'>Home</button></a>");
-							out.println("Go to <a href='http://localhost:8080/Bank/admin.jsp'>Admin</a>");
-							out.println("</center>");
+							
+							con.close();
+							
+							response.sendRedirect("http://localhost:8080/Bank/adminpage.jsp");
+							return; 
 							
 						}
-						else //customer
+						else //customer -> rs.getInt(3) == 1
 						{
 							ResultSet rs2 = st.executeQuery("select Name from accounts where AcNo="+ "'" + rs.getString(1) + "'" + "");
 							rs2.next();
 							
+							
+							
 							session.setAttribute("username", username);
 							session.setAttribute("role", 1);
 							session.setAttribute("name", rs2.getString(1));
-							out.println("<center>");
-							out.println("<a href='http://localhost:8080/Bank/home.jsp'><button style='float:left'>Home</button></a>");
-							out.println("Go to <a href='http://localhost:8080/Bank/account.jsp?username=" + username + "'>Account</a>");
-							out.println("</center>");
+							
+							con.close();
+							
+							response.sendRedirect("http://localhost:8080/Bank/accountpage.jsp?username=" + username + "");
+							return; 
+							
 						}
 					}
-					else
+					else //account blocked
 					{
-						out.println("<script>");
-						out.println("window.alert('Account Blocked');");
-						out.println("</script>");
+						con.close();
+						response.sendRedirect("http://localhost:8080/Bank/loginpage.jsp");
+						return; 
 					}
 
 				}
-				else
+				else //invalid credentials
 				{
-					out.println("<script>");
-					out.println("window.alert('Invalid Credentials');");
-					out.println("</script>");
+					con.close();
+					response.sendRedirect("http://localhost:8080/Bank/loginpage.jsp");
+					return; 
 				}
 
 			}
-			else
+			else //account not found
 			{
-				out.println("<script>");
-				out.println("window.alert('Account Not Found');");
-				out.println("</script>");
+				con.close();
+				response.sendRedirect("http://localhost:8080/Bank/loginpage.jsp");
+				return; 
 			}
 		}
 		catch (Exception e)

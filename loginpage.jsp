@@ -5,38 +5,46 @@
 	{
 		if ((Integer) session.getAttribute("role") == 2) //admin
 		{
-			out.println("<center>");
-			out.println("<a href='http://localhost:8080/Bank/home.jsp'><button style='float:left'>Home</button></a>");
-			out.println("Go to <a href='http://localhost:8080/Bank/admin.jsp'>Admin</a>");
-			out.println("</center>");
+			response.sendRedirect("http://localhost:8080/Bank/admin.jsp");
+			return; 
 		}
 		else if((Integer) session.getAttribute("role") == 1) //customer
 		{
-			out.println("customer logged in");
+			String username = (String) session.getAttribute("username");
+			response.sendRedirect("http://localhost:8080/Bank/accountpage.jsp?username=" + username + "");
+			return; 
 		}
 	}
 
 	catch (Exception e)
 	{
-		out.println("<center><h1>Login</h1></center>");
-		out.println("<a href='http://localhost:8080/Bank/home.jsp'><button style='float:left'>Home</button></a>");
-		out.println("<form action='http://localhost:8080/Bank/login.jsp' method='post'>");
-		out.println("<center>");
-		out.println("<table>");
-		out.println("<tr>");
-		out.println("<td>UserName</td>");
-		out.println("<td><input name='username'></td>");
-		out.println("</tr>");
-		out.println("<tr>");
-		out.println("<td>Password</td>");
-		out.println("<td><input name='password' type='password'></td>");
-		out.println("</tr>");
-		out.println("<tr>");
-		out.println("<td><input type='submit'></td>");
-		out.println("</tr>");
-		out.println("</table>");
-		out.println("</center>");
-		out.println("</form>");
+		String headContent = "<head>" + 
+								"<title>Login | Mark's Bank </title>" + 
+								"<link  href='http://localhost:8080/Bank/stylesheet.css' rel='stylesheet' type='text/css'>" + 
+						 "</head>";
+		out.println(headContent);
+		
+		out.println("<body>");
+			out.println("<a href='http://localhost:8080/Bank/homepage.jsp' style='text-decoration:none'><h1><center>Mark's Bank</center></h1></a>");
+			out.println("<div class='box3'>");
+				out.println("<center><h2>Login</h2></center>");
+				out.println("<form action='http://localhost:8080/Bank/login.jsp' method='post' id='logIn'>");
+					out.println("<center>");
+						out.println("<input name='username' placeholder='Username' class='formTextField'>");
+						out.println("<input name='password' type='password' placeholder='Password' class='formTextField'>");
+						
+						out.println("<a href='http://localhost:8080/Bank/homepage.jsp'>");
+							out.println("<div class='redBtn'><center>Cancel</center></div>");
+						out.println("</a>");
+						
+						out.println("<a href='#' onclick=document.getElementById('logIn').submit();> ");
+							out.println("<div class='greenBtn'><center>Submit</center></div>");
+						out.println("</a>");
+						
+					out.println("</center>");
+				out.println("</form>");
+				
+		out.println("</body>");
 	}
 %>
 	
