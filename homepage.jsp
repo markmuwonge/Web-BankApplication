@@ -10,7 +10,7 @@
 										"<div class='greenBtn'><center>" + button1 + "</center></div>" + 
 									"</a>" + 
 									"<a href=" + "'" + link2 + "'" + " >" + 
-										"<div class='greenBtn'><center>" + button2 + "</center></div>" + 
+										"<div class='redBtn'><center>" + button2 + "</center></div>" + 
 									"</a>" + 
 								"</div>" + 
 						"</body>";
